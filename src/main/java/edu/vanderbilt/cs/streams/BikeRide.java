@@ -101,13 +101,14 @@ public class BikeRide {
     public final double[] grade;
     public final double[] altitude;
     public final LatLng[] coordinates;
-
+    Stream<DataFrame> fusionArr;
+    
     @JsonCreator
     public BikeRide(@JsonProperty("heartrate") DataStream heartRate,
                     @JsonProperty("velocity_smooth") DataStream velocity,
                     @JsonProperty("grade_smooth") DataStream grade,
                     @JsonProperty("altitude") DataStream altitude,
-                    @JsonProperty("latlng") LatLngStream coordinates) {
+                    @JsonProperty("latlng") LatLngStream coordinates,  @JsonProperty("fusion") DataStream fusionArr) {
 
         super();
         this.heartRate = heartRate.data;
@@ -115,8 +116,9 @@ public class BikeRide {
         this.grade = grade.data;
         this.altitude = altitude.data;
         this.coordinates = coordinates.data;
-    }
-
+     }
+    
+ 
     // @ToDo:
     //
     // Implement this method so it returns a
@@ -171,7 +173,9 @@ public class BikeRide {
     // data arrays (e.g., heartRate, velocity, etc.)
     //
     public Stream<DataFrame> fusedFramesStream() {
-        return Stream.empty();
+        this.fusionArr  = IntStream.range(0, coordinates.length).mapToObj(i -> new DataFrame(coordinates[i], grade[i], altitude[i],velocity[i],heartRate[i]));
+
+    	return(fusionArr);
     }
 
 
