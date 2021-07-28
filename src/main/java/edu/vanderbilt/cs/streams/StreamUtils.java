@@ -37,9 +37,16 @@ public class StreamUtils {
         // 2. Think of how you could use IntStream.range()
         // 3. List.subLIst will be useful to you
         // 4. A windowSize < 1 should return an empty stream
-
-        return Stream.empty();
-    }
+    	if(windowSize < 1) 
+    	{
+    		return Stream.empty();
+    	}
+    	else {
+    		  return IntStream.range(0, data.size()-windowSize+1)
+                      .mapToObj(start -> data.subList(start, start+windowSize));
+    	}
+        
+     }
 
     /**
      * @ToDo:
