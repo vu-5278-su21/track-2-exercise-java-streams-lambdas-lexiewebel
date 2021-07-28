@@ -174,7 +174,6 @@ public class BikeRide {
     //
     public Stream<DataFrame> fusedFramesStream() {
         this.fusionArr  = IntStream.range(0, coordinates.length).mapToObj(i -> new DataFrame(coordinates[i], grade[i], altitude[i],velocity[i],heartRate[i]));
-
     	return(fusionArr);
     }
 

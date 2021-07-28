@@ -3,6 +3,7 @@ package edu.vanderbilt.cs.streams;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.ToDoubleFunction;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -37,13 +38,14 @@ public class StreamUtils {
         // 2. Think of how you could use IntStream.range()
         // 3. List.subLIst will be useful to you
         // 4. A windowSize < 1 should return an empty stream
+    	//Citation: https://stackoverflow.com/questions/34158634/how-to-transform-a-java-stream-into-a-sliding-window
     	if(windowSize < 1) 
     	{
     		return Stream.empty();
     	}
     	else {
-    		  return IntStream.range(0, data.size()-windowSize+1)
-                      .mapToObj(start -> data.subList(start, start+windowSize));
+    		  return IntStream.range(0, (data.size() - windowSize) + 1)
+                      .mapToObj(start -> data.subList(start, start + windowSize));
     	}
         
      }
@@ -73,10 +75,11 @@ public class StreamUtils {
      */
     public static <T> Function<List<T>, Double> averageOfProperty(ToDoubleFunction<T> f){
         return (List<T> window) -> {
-            // You need to update this code here to
+        	 // You need to update this code here to
             // return the average of the property that
             // is extracted with the function `f`
-            return 0.0;
+        	double returndouble = window.stream().collect(Collectors.averagingDouble(f));
+             return returndouble;
         };
     }
 
